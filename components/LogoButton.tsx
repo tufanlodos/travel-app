@@ -1,14 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function LogoButton() {
   return (
-    <button className="hidden md:block">
+    <Link className="hidden md:block cursor-pointer" href="/">
       <Image
         className="lg:hidden"
         src="/icon.png"
         alt="Logo"
-        width={37}
-        height={37}
+        width={40}
+        height={40}
         priority
       />
       <Image
@@ -16,9 +17,9 @@ export function LogoButton() {
         src="/logo-green.png"
         alt="Logo"
         width={180}
-        height={37}
+        height={40}
         priority
       />
-    </button>
+    </Link>
   );
 }

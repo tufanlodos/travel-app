@@ -16,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`p-10 py-5 ${nunitoSans.className}`}>
-        <main className="min-h-screen">{children}</main>
-        <footer>
+      <body className={nunitoSans.className}>
+        <main>{children}</main>
+        <footer className="px-10 sticky bottom-0">
           <FooterText />
         </footer>
       </body>

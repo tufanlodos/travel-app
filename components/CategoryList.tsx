@@ -1,3 +1,3 @@
 export function CategoryList() {
-  return <div>Category List</div>;
+  return <div className="p-10">Category List</div>;
 }

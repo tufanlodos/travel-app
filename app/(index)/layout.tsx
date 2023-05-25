@@ -1,4 +1,9 @@
-import { AvatarMenu, LogoButton, SearchBar, CategoryList } from "@/components";
+import {
+  AvatarButton,
+  LogoButton,
+  SearchButton,
+  CategoryList,
+} from "@/components";
 
 export default function RootLayout({
   children,
@@ -7,11 +12,11 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <header>
-        <nav className="flex justify-between items-center">
+      <header className="sticky top-0">
+        <nav className="flex justify-center md:justify-between items-center border-b px-10 py-5">
           <LogoButton />
-          <SearchBar />
-          <AvatarMenu />
+          <SearchButton />
+          <AvatarButton />
         </nav>
         <CategoryList />
       </header>
