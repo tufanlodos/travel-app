@@ -3,5 +3,5 @@ export const metadata = {
 };
 
 export default function ListingPage() {
-  return <div>Listing Page</div>;
+  return <section>Listing Page</section>;
 }

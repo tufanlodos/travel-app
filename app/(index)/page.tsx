@@ -1,3 +1,3 @@
 export default function IndexPage() {
-  return <main>Index page</main>;
+  return <section>Index page</section>;
 }

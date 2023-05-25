@@ -2,9 +2,17 @@ import Image from "next/image";
 
 export function LogoButton() {
   return (
-    <button>
+    <button className="hidden md:block">
       <Image
-        className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
+        className="lg:hidden"
+        src="/icon.png"
+        alt="Logo"
+        width={37}
+        height={37}
+        priority
+      />
+      <Image
+        className="hidden lg:block"
         src="/logo-green.png"
         alt="Logo"
         width={180}

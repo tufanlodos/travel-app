@@ -3,5 +3,5 @@ export const metadata = {
 };
 
 export default function SearchPage() {
-  return <main>Search Page</main>;
+  return <section>Search Page</section>;
 }
