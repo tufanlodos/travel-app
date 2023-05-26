@@ -36,9 +36,11 @@ export default function ListingPage({ params }: Props) {
   return (
     <>
       <title>{item.info.title}</title>
-      <section className="mx-60 mt-6">
-        <h1 className="text-2xl font-semibold">{item.info.title}</h1>
-        <div className="flex justify-between items-center mb-6">
+      <section className="mx-5 md:mx-60 mt-6">
+        <h1 className="text-2xl font-semibold mb-3 md:mb-0">
+          {item.info.title}
+        </h1>
+        <div className="hidden md:flex justify-between items-center mb-6">
           <div className="flex items-center">
             <span className="flex items-center mr-2">
               <svg
@@ -60,6 +62,22 @@ export default function ListingPage({ params }: Props) {
               {item.info.visibleReviewCount} reviews
             </text>
             <span className="mx-2">·</span>
+            {item.info.host.isSuperhost && (
+              <span className="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="w-4 h-4 fill-black"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 00-.584.859 6.753 6.753 0 006.138 5.6 6.73 6.73 0 002.743 1.346A6.707 6.707 0 019.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 00-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 00.75-.75 2.25 2.25 0 00-2.25-2.25h-.75v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 01-1.112-3.173 6.73 6.73 0 002.743-1.347 6.753 6.753 0 006.139-5.6.75.75 0 00-.585-.858 47.077 47.077 0 00-3.07-.543V2.62a.75.75 0 00-.658-.744 49.22 49.22 0 00-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 00-.657.744zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 013.16 5.337a45.6 45.6 0 012.006-.343v.256zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 01-2.863 3.207 6.72 6.72 0 00.857-3.294z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <text className="text-sm font-normal mx-2"> Superhost · </text>
+              </span>
+            )}
             <text className="text-sm font-semibold underline cursor-pointer">
               {item.info.location.city}, {item.info.location.country.title}
             </text>
@@ -99,7 +117,16 @@ export default function ListingPage({ params }: Props) {
             </text>
           </div>
         </div>
-        <div className="grid grid-rows-2 grid-cols-4 gap-4 mb-6 rounded-md">
+        <div className="md:hidden mb-6">
+          <Image
+            src={item.info.mainImage.url}
+            alt={item.info.title}
+            width={item.info.mainImage.width}
+            height={item.info.mainImage.height}
+            className="aspect-square rounded-md w-full h-full"
+          />
+        </div>
+        <div className="hidden md:grid grid-rows-2 grid-cols-4 gap-4 mb-6 rounded-md">
           {item.info.images.data.slice(0, 5).map((image, index) => (
             <div
               key={image.url}
@@ -117,7 +144,7 @@ export default function ListingPage({ params }: Props) {
         </div>
         <div className="flex flex-1 justify-start items-center">
           <div className="flex flex-5">
-            <div className="flex flex-col mr-12">
+            <div className="flex flex-col md:mr-12">
               <div className="flex justify-between items-center border-b pb-6">
                 <div>
                   <h2 className="text-xl font-semibold">
@@ -130,14 +157,29 @@ export default function ListingPage({ params }: Props) {
                     </text>
                   ))}
                 </div>
-                <Image
-                  src={item.info.host.avatar.url}
-                  alt={item.info.host.name}
-                  width={50}
-                  height={50}
-                  className="rounded-full cursor-pointer"
-                  loading="eager"
-                />
+                <div className="relative cursor-pointer">
+                  {item.info.host.isSuperhost && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="w-4 h-4 absolute bottom-0 fill-primary"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 00-.584.859 6.753 6.753 0 006.138 5.6 6.73 6.73 0 002.743 1.346A6.707 6.707 0 019.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 00-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 00.75-.75 2.25 2.25 0 00-2.25-2.25h-.75v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 01-1.112-3.173 6.73 6.73 0 002.743-1.347 6.753 6.753 0 006.139-5.6.75.75 0 00-.585-.858 47.077 47.077 0 00-3.07-.543V2.62a.75.75 0 00-.658-.744 49.22 49.22 0 00-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 00-.657.744zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 013.16 5.337a45.6 45.6 0 012.006-.343v.256zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 01-2.863 3.207 6.72 6.72 0 00.857-3.294z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
+                  <Image
+                    src={item.info.host.avatar.url}
+                    alt={item.info.host.name}
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                    loading="eager"
+                  />
+                </div>
               </div>
               <p className="mt-6 border-b pb-6">{item.info.description}</p>
               {item.info.sleepingArrangements.count > 0 && (
@@ -235,7 +277,7 @@ export default function ListingPage({ params }: Props) {
               </div>
             </div>
           </div>
-          <div className="flex flex-3">
+          <div className="hidden md:flex flex-3">
             <div className="flex flex-col shadow-lg border rounded-lg p-5 min-w-[300px]">
               <button className="bg-primary rounded-md py-3 px-7 text-white font-bold hover:bg-primary-light">
                 Reserve
