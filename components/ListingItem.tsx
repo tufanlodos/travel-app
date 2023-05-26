@@ -41,7 +41,7 @@ export function ListingItem({ item }: Props) {
             {item.info.currency.symbol}
             {item.info.price}
           </text>
-          <text className="font-normal"> night</text>
+          <text className="font-light"> night</text>
         </span>
       </div>
     </Link>
