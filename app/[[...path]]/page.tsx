@@ -23,7 +23,6 @@ export default function IndexPage({ params }: Props) {
   const list = listings.filter((listing) =>
     selectedCategoryId === "" ? true : listing.category === selectedCategoryId
   );
-  // TODO no result view if empty list
 
   return (
     <>
@@ -39,9 +38,13 @@ export default function IndexPage({ params }: Props) {
       />
       <section className="px-10">
         <ListingsContainer>
-          {list.map((listing) => (
-            <ListingItem key={listing.ref} item={listing} />
-          ))}
+          {list.length === 0 ? (
+            <text>No result</text>
+          ) : (
+            list.map((listing) => (
+              <ListingItem key={listing.ref} item={listing} />
+            ))
+          )}
         </ListingsContainer>
       </section>
     </>

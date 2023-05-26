@@ -103,7 +103,7 @@ export function SearchButton() {
               }`}
             >
               {selectedGuestCount === 0
-                ? "Add"
+                ? "Add guests"
                 : `${selectedGuestCount} guests`}
             </text>
           </div>
@@ -193,19 +193,9 @@ export function SearchButton() {
               >
                 -
               </button>
-              <input
-                type="number"
-                className="border border-slate-200 rounded-md w-20 h-10 text-center"
-                value={selectedGuestCount}
-                onChange={(e) => {
-                  if (
-                    Number.isFinite(e.target.value) &&
-                    Number(e.target.value) >= 0
-                  ) {
-                    setSelectedGuestCount(Number(e.target.value));
-                  }
-                }}
-              />
+              <div className="flex items-center justify-center border border-slate-200 rounded-md w-20 h-10">
+                {selectedGuestCount}
+              </div>
               <button
                 className="border border-slate-200 rounded-md w-20 h-10"
                 onClick={() => setSelectedGuestCount(selectedGuestCount + 1)}

@@ -1,5 +1,5 @@
 import * as listings from "./listings.json";
-import { Listing, ListingsResponse } from "./types";
+import { ListingsResponse } from "./types";
 
 const data = listings as ListingsResponse;
 

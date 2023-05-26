@@ -4,19 +4,22 @@ import Image from "next/image";
 import { getListing } from "@/api";
 import { ButtonOutline, Modal } from "@/components";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   params: { id: string };
 };
 
 export default function ListingPage({ params }: Props) {
+  const router = useRouter();
   const { id } = params;
   const item = getListing(id);
   const [showAmenitiesModal, setShowAmenitiesModal] = useState(false);
 
   if (!item) {
-    // TODO: 404 page and Sticky widget below
-    return null;
+    router.push("/404");
+    router.refresh();
+    return;
   }
 
   return (
