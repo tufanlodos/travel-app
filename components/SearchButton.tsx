@@ -124,7 +124,7 @@ export function SearchButton() {
       {showSearchModal && (
         <Modal>
           {/*header*/}
-          <div className="flex justify-between items-center p-5 border-b border-solid border-slate-200 rounded-t">
+          <div className="flex justify-between items-center p-5 border-b border-slate-200 rounded-t">
             <h1 className="text-3xl font-semibold">Find a place</h1>
             <button
               className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -146,7 +146,7 @@ export function SearchButton() {
             </button>
           </div>
           {/*body*/}
-          <div className="relative p-6 flex-auto border-b border-solid border-slate-200">
+          <div className="relative p-6 flex-auto border-b border-slate-200">
             <h2 className="font-bold">Location</h2>
             <select
               className="border border-slate-200 rounded-md h-10"
@@ -161,7 +161,7 @@ export function SearchButton() {
               ))}
             </select>
           </div>
-          <div className="relative p-6 flex-auto border-b border-solid border-slate-200">
+          <div className="relative p-6 flex-auto border-b border-slate-200">
             <h2 className="font-bold">Date</h2>
             <div className="flex items-center">
               <div className="flex flex-col">
@@ -180,7 +180,7 @@ export function SearchButton() {
               </div>
             </div>
           </div>
-          <div className="relative p-6 flex-auto border-b border-solid border-slate-200">
+          <div className="relative p-6 flex-auto border-b border-slate-200">
             <h2 className="font-bold">Number of guests</h2>
             <div className="flex items-center">
               <button

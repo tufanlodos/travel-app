@@ -22,6 +22,17 @@ export default function ListingPage({ params }: Props) {
     return;
   }
 
+  const amenityGroups = item.info.amenities.data.reduce(
+    (acc: { [key: string]: (typeof amenity)[] }, amenity) => {
+      if (!acc[amenity.group]) {
+        acc[amenity.group] = [];
+      }
+      acc[amenity.group].push(amenity);
+      return acc;
+    },
+    {}
+  );
+
   return (
     <>
       <title>{item.info.title}</title>
@@ -104,107 +115,135 @@ export default function ListingPage({ params }: Props) {
             </div>
           ))}
         </div>
-        <div className="flex items-center">
-          <div className="flex flex-col mr-12">
-            <div className="flex justify-between items-center border-b pb-6">
-              <div>
-                <h2 className="text-xl font-semibold">
-                  Entire {item.info.type} by {item.info.host.name}
-                </h2>
-                {item.info.details.data.map((detail, index) => (
-                  <text key={detail.type}>
-                    {index !== 0 ? " · " : ""}
-                    {detail.value} {detail.type}
-                  </text>
-                ))}
-              </div>
-              <Image
-                src={item.info.host.avatar.url}
-                alt={item.info.host.name}
-                width={50}
-                height={50}
-                className="rounded-full cursor-pointer"
-                loading="eager"
-              />
-            </div>
-            <p className="mt-6 border-b pb-6">{item.info.description}</p>
-            {item.info.sleepingArrangements.count > 0 && (
-              <div className="flex flex-col items-start border-b py-6">
-                <h2 className="text-xl font-semibold mb-2">
-                  Where you’ll sleep
-                </h2>
-                <div className="flex items-center">
-                  {item.info.sleepingArrangements.data.map((arrangement) => (
-                    <div
-                      key={arrangement.title}
-                      className="rounded-md border p-6 mr-3"
-                    >
-                      <h3 className="font-semibold">{arrangement.title}</h3>
-                      <text>{arrangement.subTitle}</text>
-                    </div>
+        <div className="flex flex-1 justify-start items-center">
+          <div className="flex flex-5">
+            <div className="flex flex-col mr-12">
+              <div className="flex justify-between items-center border-b pb-6">
+                <div>
+                  <h2 className="text-xl font-semibold">
+                    Entire {item.info.type} by {item.info.host.name}
+                  </h2>
+                  {item.info.details.data.map((detail, index) => (
+                    <text key={detail.type}>
+                      {index !== 0 ? " · " : ""}
+                      {detail.value} {detail.type}
+                    </text>
                   ))}
                 </div>
+                <Image
+                  src={item.info.host.avatar.url}
+                  alt={item.info.host.name}
+                  width={50}
+                  height={50}
+                  className="rounded-full cursor-pointer"
+                  loading="eager"
+                />
               </div>
-            )}
-            <div className="flex flex-col items-start border-b py-6">
-              <h2 className="text-xl font-semibold mb-2">
-                What this place offers
-              </h2>
-              <div className="grid grid-cols-2 gap-2 mb-4">
-                {item.info.amenities.data.slice(0, 10).map((amenity) => (
-                  <text
-                    key={amenity.title}
-                    className={!amenity.available ? "line-through" : ""}
-                  >
-                    • {amenity.title}
-                  </text>
-                ))}
-              </div>
-              <ButtonOutline onClick={() => setShowAmenitiesModal(true)}>
-                Show all {item.info.amenities.count} amenities
-              </ButtonOutline>
-              {showAmenitiesModal && (
-                <Modal>
-                  {/*header*/}
-                  <div className="flex justify-between items-center p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h1 className="text-3xl font-semibold">
-                      What this place offers
-                    </h1>
-                    <button
-                      className="p-1 ml-auto bg-transparent border-0 text-black float-left text-3xl leading-none font-semibold outline-none focus:outline-none"
-                      onClick={() => setShowAmenitiesModal(false)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        className="w-6 h-6 stroke-black"
+              <p className="mt-6 border-b pb-6">{item.info.description}</p>
+              {item.info.sleepingArrangements.count > 0 && (
+                <div className="flex flex-col items-start border-b py-6">
+                  <h2 className="text-xl font-semibold mb-2">
+                    Where you’ll sleep
+                  </h2>
+                  <div className="flex items-center">
+                    {item.info.sleepingArrangements.data.map((arrangement) => (
+                      <div
+                        key={arrangement.title}
+                        className="rounded-md border p-6 mr-3"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
+                        <h3 className="font-semibold">{arrangement.title}</h3>
+                        <text>{arrangement.subTitle}</text>
+                      </div>
+                    ))}
                   </div>
-                  {/*body*/}
-                  <div className="relative p-6 flex-auto border-b border-solid border-slate-200">
-                    <h2>{item.info.amenities.count} amenities</h2>
-                  </div>
-                </Modal>
+                </div>
               )}
-            </div>
-            <div className="flex flex-col items-start border-b py-6">
-              <h2 className="text-xl font-semibold mb-2">Where you’ll be</h2>
-              <text>
-                {item.info.location.city}, {item.info.location.country.title}
-              </text>
+              <div className="flex flex-col items-start border-b py-6">
+                <h2 className="text-xl font-semibold mb-2">
+                  What this place offers
+                </h2>
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  {item.info.amenities.data.slice(0, 10).map((amenity) => (
+                    <text
+                      key={amenity.title}
+                      className={!amenity.available ? "line-through" : ""}
+                    >
+                      • {amenity.title}
+                    </text>
+                  ))}
+                </div>
+                <ButtonOutline onClick={() => setShowAmenitiesModal(true)}>
+                  Show all {item.info.amenities.count} amenities
+                </ButtonOutline>
+                {showAmenitiesModal && (
+                  <Modal>
+                    {/*header*/}
+                    <div className="flex justify-between items-center p-5 border-b border-slate-200 rounded-t">
+                      <h1 className="text-3xl font-semibold">
+                        What this place offers
+                      </h1>
+                      <button
+                        className="p-1 ml-auto bg-transparent border-0 text-black float-left text-3xl leading-none font-semibold outline-none focus:outline-none"
+                        onClick={() => setShowAmenitiesModal(false)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          className="w-6 h-6 stroke-black"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    {/*body*/}
+                    <div className="relative p-6 flex-auto border-b border-slate-200 h-96 overflow-scroll">
+                      {Object.keys(amenityGroups).map((groupName) => (
+                        <div key={groupName} className="mb-5">
+                          <div>
+                            <text className="text-lg font-semibold">
+                              {groupName}
+                            </text>
+                          </div>
+                          {amenityGroups[groupName].map((amenity) => (
+                            <div key={amenity.title}>
+                              <text
+                                className={
+                                  amenity.available ? "" : "line-through"
+                                }
+                              >
+                                {amenity.title}
+                              </text>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </Modal>
+                )}
+              </div>
+              <div className="flex flex-col items-start border-b py-6">
+                <h2 className="text-xl font-semibold mb-2">Where you’ll be</h2>
+                <text>
+                  {item.info.location.city}, {item.info.location.country.title}
+                </text>
+              </div>
             </div>
           </div>
-          <div className="flex flex-col shadow-lg border rounded-lg p-5 w-[300px]">
-            Sticky widget here
+          <div className="flex flex-3">
+            <div className="flex flex-col shadow-lg border rounded-lg p-5 min-w-[300px]">
+              <button className="bg-primary rounded-md py-3 px-7 text-white font-bold hover:bg-primary-light">
+                Reserve
+              </button>
+              <text className="font-light text-center mt-4">
+                You won’t be charged yet
+              </text>
+            </div>
           </div>
         </div>
       </section>
