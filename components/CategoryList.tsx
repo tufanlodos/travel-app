@@ -17,6 +17,7 @@ type ListItemProps = {
 };
 
 function ListItem({ category }: ListItemProps) {
+  // TODO: use category id in client side to filter
   return (
     <div className="flex flex-shrink-0 items-center justify-center mr-5 border cursor-pointer rounded-md hover:shadow-sm w-[90px] h-[90px] text-center">
       {category.title}

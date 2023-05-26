@@ -4,6 +4,7 @@ import {
   SearchButton,
   CategoryList,
 } from "@/components";
+import { FooterText } from "@/components";
 
 export default function RootLayout({
   children,
@@ -12,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <header className="sticky top-0">
+      <header className="sticky top-0 bg-white">
         <nav className="flex justify-center md:justify-between items-center border-b px-10 py-5">
           <LogoButton />
           <SearchButton />
@@ -21,6 +22,9 @@ export default function RootLayout({
         <CategoryList />
       </header>
       {children}
+      <footer className="px-10 sticky bottom-0 bg-white">
+        <FooterText />
+      </footer>
     </>
   );
 }

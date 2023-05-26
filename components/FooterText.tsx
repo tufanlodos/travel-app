@@ -8,5 +8,5 @@ export function FooterText() {
     setCurrentYear(new Date().getFullYear());
   }, []);
 
-  return <p>&copy; {currentYear} Travel App</p>;
+  return <p>&copy; {currentYear} Hostshare</p>;
 }

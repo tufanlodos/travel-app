@@ -95,7 +95,6 @@ export type ListingInfo = {
   images: ListingImage;
   details: ListingDetail;
   mainImage: Image;
-  maxGuestCapacity: number;
   host: Host;
   amenities: ListingAmenity;
   location: Location;
@@ -105,11 +104,12 @@ export type ListingInfo = {
   price: number;
   currency: Currency;
   sleepingArrangements: ListingSleepingArrangement;
+  maxGuestCapacity?: number;
 };
 
 export type Listing = {
   ref: string;
-  category: Category["id"] | undefined;
+  category?: Category["id"];
   info: ListingInfo;
 };
 
