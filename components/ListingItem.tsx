@@ -23,13 +23,20 @@ export function ListingItem({ item }: Props) {
           showAnimation ? "animate-pulse" : ""
         } w-[300px]`}
       >
-        <Image
-          src={item.info.mainImage.url}
-          alt={item.info.title}
-          width={300}
-          height={300}
-          className="rounded-lg aspect-square"
-        />
+        <div className="relative">
+          {item.info.host !== undefined && item.info.host.isSuperhost && (
+            <div className="absolute top-3 left-3 bg-white px-3 rounded-md">
+              <text className="font-semibold text-sm">Superhost</text>
+            </div>
+          )}
+          <Image
+            src={item.info.mainImage.url}
+            alt={item.info.title}
+            width={300}
+            height={300}
+            className="rounded-lg aspect-square"
+          />
+        </div>
         <div className="flex justify-between items-center mt-2">
           <text className="text-base font-semibold">
             {item.info.location.city}, {item.info.location.country.title}

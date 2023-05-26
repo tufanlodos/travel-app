@@ -8,12 +8,10 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <header className="sticky top-0 bg-white">
-        <nav className="flex justify-center md:justify-between items-center border-b px-10 py-5">
-          <LogoButton />
-          <SearchButton />
-          <AvatarButton />
-        </nav>
+      <header className="flex justify-center md:justify-between items-center border-b px-10 py-5 sticky top-0 bg-white z-10">
+        <LogoButton />
+        <SearchButton />
+        <AvatarButton />
       </header>
       {children}
       <footer className="px-10 sticky bottom-0 bg-white">
