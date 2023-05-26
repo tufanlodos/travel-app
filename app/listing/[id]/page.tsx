@@ -147,7 +147,7 @@ export default function ListingPage({ params }: Props) {
               <h2 className="text-xl font-semibold mb-2">
                 What this place offers
               </h2>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 mb-4">
                 {item.info.amenities.data.slice(0, 10).map((amenity) => (
                   <text
                     key={amenity.title}

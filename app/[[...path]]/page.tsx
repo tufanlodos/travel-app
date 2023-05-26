@@ -1,8 +1,9 @@
 "use client";
 
 import { getCities, getListings } from "@/api";
-import { ListingItem, ListingsContainer } from "@/components";
+import { CategoryList, ListingItem, ListingsContainer } from "@/components";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 type Props = {
   params: { path: string[] };
@@ -18,15 +19,32 @@ export default function IndexPage({ params }: Props) {
     applySearch && city !== undefined ? city : undefined,
     applySearch && guestCount !== undefined ? Number(guestCount) : undefined
   );
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const list = listings.filter((listing) =>
+    selectedCategoryId === "" ? true : listing.category === selectedCategoryId
+  );
+  // TODO no result view if empty list
 
   return (
-    <section className="px-10">
-      <ListingsContainer>
-        {listings.map((listing) => (
-          <ListingItem key={listing.ref} item={listing} />
-        ))}
-      </ListingsContainer>
-    </section>
+    <>
+      <CategoryList
+        selectedId={selectedCategoryId}
+        onSelect={(id) => {
+          if (id === selectedCategoryId) {
+            setSelectedCategoryId("");
+          } else {
+            setSelectedCategoryId(id);
+          }
+        }}
+      />
+      <section className="px-10">
+        <ListingsContainer>
+          {list.map((listing) => (
+            <ListingItem key={listing.ref} item={listing} />
+          ))}
+        </ListingsContainer>
+      </section>
+    </>
   );
 }
 

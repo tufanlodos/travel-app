@@ -19,8 +19,6 @@ export function SearchButton() {
 
   useEffect(() => {
     if (cityParam !== null) {
-      console.log("jjs", cityParam);
-
       setSelectedCity(cityParam);
     }
 

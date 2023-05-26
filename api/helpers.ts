@@ -17,24 +17,19 @@ export function getListing(id: string) {
 }
 
 export function getListings(city?: string, guestCount?: number) {
-  const listingIds = data.data.map((listing) => listing.info.id);
-  const uniqueListingIds = [...new Set(listingIds)];
-
   if (city === undefined && guestCount === undefined) {
-    return uniqueListingIds.map((id) => getListing(id) as Listing);
+    return data.data;
   }
 
-  return uniqueListingIds
-    .map((id) => getListing(id) as Listing)
-    .filter(
-      (listing) =>
-        listing.info.available &&
-        (city === undefined
-          ? true
-          : listing.info.location.city.toLowerCase() === city.toLowerCase()) &&
-        (guestCount === undefined
-          ? true
-          : listing.info.maxGuestCapacity !== undefined &&
-            listing.info.maxGuestCapacity >= guestCount)
-    );
+  return data.data.filter(
+    (listing) =>
+      listing.info.available &&
+      (city === undefined
+        ? true
+        : listing.info.location.city.toLowerCase() === city.toLowerCase()) &&
+      (guestCount === undefined
+        ? true
+        : listing.info.maxGuestCapacity !== undefined &&
+          listing.info.maxGuestCapacity >= guestCount)
+  );
 }

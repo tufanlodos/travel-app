@@ -1,9 +1,4 @@
-import {
-  AvatarButton,
-  LogoButton,
-  SearchButton,
-  CategoryList,
-} from "@/components";
+import { AvatarButton, LogoButton, SearchButton } from "@/components";
 import { FooterText } from "@/components";
 
 export default function RootLayout({
@@ -19,7 +14,6 @@ export default function RootLayout({
           <SearchButton />
           <AvatarButton />
         </nav>
-        <CategoryList />
       </header>
       {children}
       <footer className="px-10 sticky bottom-0 bg-white">
