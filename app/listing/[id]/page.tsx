@@ -1,23 +1,18 @@
+"use client";
+
 import Image from "next/image";
-import Head from "next/head";
 import { getListing } from "@/api";
+import { ButtonOutline, Modal } from "@/components";
+import { useState } from "react";
 
 type Props = {
   params: { id: string };
 };
 
-export async function generateMetadata({ params }: Props) {
-  const { id } = params;
-  const item = getListing(id);
-
-  return {
-    title: item?.info.title ?? "Title",
-  };
-}
-
 export default function ListingPage({ params }: Props) {
   const { id } = params;
   const item = getListing(id);
+  const [showAmenitiesModal, setShowAmenitiesModal] = useState(false);
 
   if (!item) {
     // TODO: 404 page and Sticky widget below
@@ -26,9 +21,7 @@ export default function ListingPage({ params }: Props) {
 
   return (
     <>
-      <Head>
-        <title>{item.info.title}</title>
-      </Head>
+      <title>{item.info.title}</title>
       <section className="mx-60 mt-6">
         <h1 className="text-2xl font-semibold">{item.info.title}</h1>
         <div className="flex justify-between items-center mb-6">
@@ -103,7 +96,7 @@ export default function ListingPage({ params }: Props) {
                 alt={item.info.title}
                 width={image.width}
                 height={image.height}
-                className="aspect-square rounded-md"
+                className="aspect-square rounded-md w-full h-full"
               />
             </div>
           ))}
@@ -128,6 +121,7 @@ export default function ListingPage({ params }: Props) {
                 width={50}
                 height={50}
                 className="rounded-full cursor-pointer"
+                loading="eager"
               />
             </div>
             <p className="mt-6 border-b pb-6">{item.info.description}</p>
@@ -163,9 +157,41 @@ export default function ListingPage({ params }: Props) {
                   </text>
                 ))}
               </div>
-              <button className="rounded-md border border-black mt-3 px-6 py-3 hover:bg-gray-100 font-semibold">
+              <ButtonOutline onClick={() => setShowAmenitiesModal(true)}>
                 Show all {item.info.amenities.count} amenities
-              </button>
+              </ButtonOutline>
+              {showAmenitiesModal && (
+                <Modal>
+                  {/*header*/}
+                  <div className="flex justify-between items-center p-5 border-b border-solid border-slate-200 rounded-t">
+                    <h1 className="text-3xl font-semibold">
+                      What this place offers
+                    </h1>
+                    <button
+                      className="p-1 ml-auto bg-transparent border-0 text-black float-left text-3xl leading-none font-semibold outline-none focus:outline-none"
+                      onClick={() => setShowAmenitiesModal(false)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        className="w-6 h-6 stroke-black"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  {/*body*/}
+                  <div className="relative p-6 flex-auto border-b border-solid border-slate-200">
+                    <h2>{item.info.amenities.count} amenities</h2>
+                  </div>
+                </Modal>
+              )}
             </div>
             <div className="flex flex-col items-start border-b py-6">
               <h2 className="text-xl font-semibold mb-2">Where you’ll be</h2>
@@ -174,7 +200,7 @@ export default function ListingPage({ params }: Props) {
               </text>
             </div>
           </div>
-          <div className="flex flex-col shadow-lg border rounded-lg p-5">
+          <div className="flex flex-col shadow-lg border rounded-lg p-5 w-[300px]">
             Sticky widget here
           </div>
         </div>

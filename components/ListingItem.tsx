@@ -1,13 +1,28 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Listing } from "@/api";
+import { useEffect, useState } from "react";
 
 type Props = { item: Listing };
 
 export function ListingItem({ item }: Props) {
+  const [showAnimation, setShowAnimation] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAnimation(false);
+    }, 750);
+  }, []);
+
   return (
     <Link href={`/listing/${item.info.id}`} target="_blank">
-      <div className="flex flex-col mr-5">
+      <div
+        className={`flex flex-col mr-5 ${
+          showAnimation ? "animate-pulse" : ""
+        } w-[300px]`}
+      >
         <Image
           src={item.info.mainImage.url}
           alt={item.info.title}

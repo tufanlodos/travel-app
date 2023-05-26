@@ -4,17 +4,20 @@ import { getCities, getListings } from "@/api";
 import { ListingItem, ListingsContainer } from "@/components";
 import { useSearchParams } from "next/navigation";
 
-export default function SearchPage() {
+type Props = {
+  params: { path: string[] };
+};
+
+export default function IndexPage({ params }: Props) {
   const searchParams = useSearchParams();
   const cityParam = searchParams.get("city");
   const guestCountParam = searchParams.get("guestCount");
   const { city, guestCount } = validateParams(cityParam, guestCountParam);
-  const listings = getListings(city, Number(guestCount));
-
-  if (listings.length === 0) {
-    // TODO: no result view
-    return null;
-  }
+  const applySearch = params.path !== undefined && params.path[0] === "search";
+  const listings = getListings(
+    applySearch && city !== undefined ? city : undefined,
+    applySearch && guestCount !== undefined ? Number(guestCount) : undefined
+  );
 
   return (
     <section className="px-10">
