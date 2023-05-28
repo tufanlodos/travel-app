@@ -76,28 +76,28 @@ export function SearchButton() {
             />
           </svg>
           <div className="flex flex-col">
-            <text className="text-sm px-2 font-semibold">
+            <span className="text-sm px-2 font-semibold">
               {selectedCity === "" ? "Anywhere" : selectedCity}
-            </text>
+            </span>
             <div className="flex items-center">
-              <text className="text-sm pl-2 text-gray-500">Any date ·</text>
-              <text className="text-sm pl-1 text-gray-500">
+              <span className="text-sm pl-2 text-gray-500">Any date ·</span>
+              <span className="text-sm pl-1 text-gray-500">
                 {selectedGuestCount === 0
                   ? "Add guests"
                   : `${selectedGuestCount} guests`}
-              </text>
+              </span>
             </div>
           </div>
         </div>
         <div className="hidden md:flex">
           <div className="flex items-center">
-            <text className="text-sm px-2 font-semibold border-r">
+            <span className="text-sm px-2 font-semibold border-r">
               {selectedCity === "" ? "Anywhere" : selectedCity}
-            </text>
-            <text className="text-sm px-2 font-semibold border-r">
+            </span>
+            <span className="text-sm px-2 font-semibold border-r">
               Any date
-            </text>
-            <text
+            </span>
+            <span
               className={`text-sm px-2 ${
                 selectedGuestCount === 0 ? "text-gray-500" : "font-semibold"
               }`}
@@ -105,7 +105,7 @@ export function SearchButton() {
               {selectedGuestCount === 0
                 ? "Add guests"
                 : `${selectedGuestCount} guests`}
-            </text>
+            </span>
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"

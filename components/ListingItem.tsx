@@ -26,7 +26,7 @@ export function ListingItem({ item }: Props) {
         <div className="relative">
           {item.info.host !== undefined && item.info.host.isSuperhost && (
             <div className="absolute top-3 left-3 bg-white px-3 rounded-md">
-              <text className="font-semibold text-sm">Superhost</text>
+              <span className="font-semibold text-sm">Superhost</span>
             </div>
           )}
           <Image
@@ -38,14 +38,14 @@ export function ListingItem({ item }: Props) {
           />
         </div>
         <div className="flex justify-between items-center mt-2">
-          <text className="text-base font-semibold">
+          <span className="text-base font-semibold">
             {item.info.location.city}, {item.info.location.country.title}
-          </text>
+          </span>
           <span className="flex items-center mr-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              className="w-4 h-4 fill-black"
+              className="w-3 h-3 fill-black"
             >
               <path
                 fillRule="evenodd"
@@ -53,17 +53,17 @@ export function ListingItem({ item }: Props) {
                 clipRule="evenodd"
               />
             </svg>
-            <text className="text-sm font-semibold">
+            <span className="text-sm font-semibold">
               {item.info.ratings.value}
-            </text>
+            </span>
           </span>
         </div>
         <span>
-          <text className="text-base font-semibold">
+          <span className="text-base font-semibold">
             {item.info.currency.symbol}
             {item.info.price}
-          </text>
-          <text className="font-light"> night</text>
+          </span>
+          <span className="font-light"> night</span>
         </span>
       </div>
     </Link>

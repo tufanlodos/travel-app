@@ -1,9 +1,9 @@
 "use client";
 
-import { getCities, getListings } from "@/api";
+import { Listing, getCities, getListings } from "@/api";
 import { CategoryList, ListingItem, ListingsContainer } from "@/components";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   params: { path: string[] };
@@ -17,11 +17,10 @@ export default function IndexPage({ params }: Props) {
   const guestCountParam = searchParams.get("guestCount");
   const { city, guestCount } = validateParams(cityParam, guestCountParam);
   const applySearch = params.path !== undefined && params.path[0] === "search";
-  const listings = getListings(
+  const list = getListings(
     applySearch && city !== undefined ? city : undefined,
     applySearch && guestCount !== undefined ? Number(guestCount) : undefined
-  );
-  const list = listings.filter((listing) =>
+  ).filter((listing) =>
     selectedCategoryId === "" ? true : listing.category === selectedCategoryId
   );
 
@@ -40,10 +39,10 @@ export default function IndexPage({ params }: Props) {
       <section className="px-10">
         <ListingsContainer>
           {list.length === 0 ? (
-            <text>No result</text>
+            <span>No result</span>
           ) : (
-            list.map((listing) => (
-              <ListingItem key={listing.ref} item={listing} />
+            list.map((listing, index) => (
+              <ListingItem key={`${listing.ref}-${index}`} item={listing} />
             ))
           )}
         </ListingsContainer>

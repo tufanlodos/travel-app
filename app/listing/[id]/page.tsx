@@ -51,13 +51,13 @@ export default function ListingPage({ params }: Props) {
                 clipRule="evenodd"
               />
             </svg>
-            <text className="text-sm font-semibold">
+            <span className="text-sm font-semibold">
               {item.info.ratings.value} ·
-            </text>
+            </span>
           </span>
-          <text className="text-sm font-semibold underline cursor-pointer">
+          <span className="text-sm font-semibold underline cursor-pointer">
             {item.info.visibleReviewCount} reviews
-          </text>
+          </span>
           <span className="mx-2">·</span>
           {item.info.host !== undefined && item.info.host.isSuperhost && (
             <span className="flex items-center">
@@ -72,12 +72,12 @@ export default function ListingPage({ params }: Props) {
                   clipRule="evenodd"
                 />
               </svg>
-              <text className="text-sm font-normal mx-2"> Superhost · </text>
+              <span className="text-sm font-normal mx-2"> Superhost · </span>
             </span>
           )}
-          <text className="text-sm font-semibold underline cursor-pointer">
+          <span className="text-sm font-semibold underline cursor-pointer">
             {item.info.location.city}, {item.info.location.country.title}
-          </text>
+          </span>
         </div>
         <div className="flex items-center">
           <svg
@@ -93,9 +93,9 @@ export default function ListingPage({ params }: Props) {
               d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
             />
           </svg>
-          <text className="text-sm font-semibold underline cursor-pointer mr-5">
+          <span className="text-sm font-semibold underline cursor-pointer mr-5">
             Share
-          </text>
+          </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -109,9 +109,9 @@ export default function ListingPage({ params }: Props) {
               d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
             />
           </svg>
-          <text className="text-sm font-semibold underline cursor-pointer">
+          <span className="text-sm font-semibold underline cursor-pointer">
             Save
-          </text>
+          </span>
         </div>
       </div>
       <div className="md:hidden mb-6 relative">
@@ -161,10 +161,10 @@ export default function ListingPage({ params }: Props) {
                     : `in ${item.info.location.city}`}
                 </h2>
                 {item.info.details.data.map((detail, index) => (
-                  <text key={detail.type}>
+                  <span key={detail.type}>
                     {index !== 0 ? " · " : ""}
                     {detail.value} {detail.type}
-                  </text>
+                  </span>
                 ))}
               </div>
               <div className="relative cursor-pointer">
@@ -206,7 +206,7 @@ export default function ListingPage({ params }: Props) {
                       className="rounded-md border p-6 mr-3"
                     >
                       <h3 className="font-semibold">{arrangement.title}</h3>
-                      <text>{arrangement.subTitle}</text>
+                      <span>{arrangement.subTitle}</span>
                     </div>
                   ))}
                 </div>
@@ -218,12 +218,12 @@ export default function ListingPage({ params }: Props) {
               </h2>
               <div className="grid grid-cols-2 gap-2 mb-4">
                 {item.info.amenities.data.slice(0, 10).map((amenity) => (
-                  <text
+                  <span
                     key={amenity.title}
                     className={!amenity.available ? "line-through" : ""}
                   >
                     • {amenity.title}
-                  </text>
+                  </span>
                 ))}
               </div>
               <ButtonOutline onClick={() => setShowAmenitiesModal(true)}>
@@ -260,19 +260,19 @@ export default function ListingPage({ params }: Props) {
                     {Object.keys(amenityGroups).map((groupName) => (
                       <div key={groupName} className="mb-5">
                         <div>
-                          <text className="text-lg font-semibold">
+                          <span className="text-lg font-semibold">
                             {groupName}
-                          </text>
+                          </span>
                         </div>
                         {amenityGroups[groupName].map((amenity) => (
                           <div key={amenity.title}>
-                            <text
+                            <span
                               className={
                                 amenity.available ? "" : "line-through"
                               }
                             >
                               {amenity.title}
-                            </text>
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -283,9 +283,9 @@ export default function ListingPage({ params }: Props) {
             </div>
             <div className="flex flex-col items-start border-b py-6">
               <h2 className="text-xl font-semibold mb-2">Where you’ll be</h2>
-              <text>
+              <span>
                 {item.info.location.city}, {item.info.location.country.title}
-              </text>
+              </span>
             </div>
           </div>
         </div>
@@ -293,11 +293,11 @@ export default function ListingPage({ params }: Props) {
           <div className="flex flex-col shadow-lg border rounded-lg p-5 min-w-[300px]">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
-                <text className="text-2xl font-semibold mr-1">
+                <span className="text-2xl font-semibold mr-1">
                   {item.info.currency.symbol}
                   {item.info.price}
-                </text>
-                <text className="font-light">night</text>
+                </span>
+                <span className="font-light">night</span>
               </div>
               <div className="flex items-center">
                 <span className="flex items-center mr-2">
@@ -312,55 +312,55 @@ export default function ListingPage({ params }: Props) {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <text className="text-sm font-semibold">
+                  <span className="text-sm font-semibold">
                     {item.info.ratings.value} ·
-                  </text>
+                  </span>
                 </span>
-                <text className="text-sm font-semibold underline cursor-pointer text-gray-500">
+                <span className="text-sm font-semibold underline cursor-pointer text-gray-500">
                   {item.info.visibleReviewCount} reviews
-                </text>
+                </span>
               </div>
             </div>
             <div className="grid grid-cols-2 grid-rows-2 mb-4">
               <div className="p-4 border rounded-md">
                 <div className="flex flex-col">
-                  <text className="font-semibold">Check in</text>
-                  <text>{new Date().toLocaleDateString()}</text>
+                  <span className="font-semibold">Check in</span>
+                  <span>{new Date().toLocaleDateString()}</span>
                 </div>
               </div>
               <div className="p-4 border rounded-md">
                 <div className="flex flex-col">
-                  <text className="font-semibold">Check out</text>
-                  <text>
+                  <span className="font-semibold">Check out</span>
+                  <span>
                     {new Date(
                       new Date().getTime() + 3 * 24 * 60 * 60 * 1000
                     ).toLocaleDateString()}
-                  </text>
+                  </span>
                 </div>
               </div>
               <div className="col-span-2 p-4 border rounded-md">
-                <text>Max. {item.info.maxGuestCapacity} Guests</text>
+                <span>Max. {item.info.maxGuestCapacity} Guests</span>
               </div>
             </div>
             <button className="bg-primary rounded-md py-3 px-7 text-white font-bold hover:bg-primary-light">
               Reserve
             </button>
-            <text className="font-light text-center mt-4">
+            <span className="font-light text-center mt-4">
               You won’t be charged yet
-            </text>
+            </span>
           </div>
         </div>
       </div>
       <div className="flex justify-between md:hidden sticky bottom-0 bg-white py-2">
         <div className="flex flex-col">
           <div className="flex items-center">
-            <text className="font-semibold text-md mr-1">
+            <span className="font-semibold text-md mr-1">
               {item.info.currency.symbol}
               {item.info.price}
-            </text>
-            <text className="font-light text-md">night</text>
+            </span>
+            <span className="font-light text-md">night</span>
           </div>
-          <text className="underline">Jun 6-8</text>
+          <span className="underline">Jun 6-8</span>
         </div>
         <button className="bg-primary rounded-md py-1 px-6 text-white font-bold hover:bg-primary-light">
           Reserve
@@ -400,7 +400,7 @@ const GalleryButton = ({ images }: GalleryButtonProps) => {
           />
         </svg>
 
-        <text>Show all photos</text>
+        <span>Show all photos</span>
       </button>
       {showGalleryModal && (
         <Modal>
@@ -458,9 +458,9 @@ const GalleryButton = ({ images }: GalleryButtonProps) => {
             >
               Prev
             </button>
-            <text>
+            <span>
               {activeImageIndex + 1} / {images.length}
-            </text>
+            </span>
             <button
               className="border px-4 py-2 rounded-md"
               onClick={() => {
