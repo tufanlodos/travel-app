@@ -15,6 +15,8 @@ export default function ListingPage({ params }: Props) {
   const { id } = params;
   const item = getListing(id);
   const [showAmenitiesModal, setShowAmenitiesModal] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
 
   if (!item) {
     router.push("/404");
@@ -32,6 +34,11 @@ export default function ListingPage({ params }: Props) {
     },
     {}
   );
+
+  const onOpenGallery = (index: number) => {
+    setActiveImageIndex(index);
+    setShowGalleryModal(true);
+  };
 
   return (
     <>
@@ -120,14 +127,21 @@ export default function ListingPage({ params }: Props) {
           alt={item.info.title}
           width={item.info.mainImage.width}
           height={item.info.mainImage.height}
-          className="aspect-square rounded-md w-full h-full"
+          className="aspect-square rounded-md w-full h-full cursor-pointer"
           placeholder="blur"
           blurDataURL={getBlurDataURL(
             item.info.mainImage.width,
             item.info.mainImage.height
           )}
+          onClick={() => onOpenGallery(0)}
         />
-        <GalleryButton images={item.info.images.data} />
+        <GalleryButton
+          images={item.info.images.data}
+          activeImageIndex={activeImageIndex}
+          setActiveImageIndex={setActiveImageIndex}
+          showGalleryModal={showGalleryModal}
+          setShowGalleryModal={setShowGalleryModal}
+        />
       </div>
       <div className="hidden md:grid grid-rows-2 grid-cols-4 gap-4 mb-6 rounded-md relative">
         {item.info.images.data.slice(0, 5).map((image, index) => (
@@ -140,13 +154,20 @@ export default function ListingPage({ params }: Props) {
               alt={item.info.title}
               width={image.width}
               height={image.height}
-              className="aspect-square rounded-md w-full h-full"
+              className="aspect-square rounded-md w-full h-full cursor-pointer"
               placeholder="blur"
               blurDataURL={getBlurDataURL(image.width, image.height)}
+              onClick={() => onOpenGallery(index)}
             />
           </div>
         ))}
-        <GalleryButton images={item.info.images.data} />
+        <GalleryButton
+          images={item.info.images.data}
+          activeImageIndex={activeImageIndex}
+          setActiveImageIndex={setActiveImageIndex}
+          showGalleryModal={showGalleryModal}
+          setShowGalleryModal={setShowGalleryModal}
+        />
       </div>
       <div className="flex flex-1 justify-start items-start">
         <div className="flex flex-5">
@@ -375,19 +396,30 @@ export default function ListingPage({ params }: Props) {
 
 type GalleryButtonProps = {
   images: ImageType[];
+  activeImageIndex: number;
+  setActiveImageIndex: (index: number) => void;
+  showGalleryModal: boolean;
+  setShowGalleryModal: (show: boolean) => void;
 };
 
-const GalleryButton = ({ images }: GalleryButtonProps) => {
-  const [showGalleryModal, setShowGalleryModal] = useState(false);
+const GalleryButton = ({
+  images,
+  activeImageIndex,
+  setActiveImageIndex,
+  showGalleryModal,
+  setShowGalleryModal,
+}: GalleryButtonProps) => {
   const [loading, setLoading] = useState(false);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const src = images[activeImageIndex].url;
 
   return (
     <>
       <button
         className="flex items-center absolute bottom-3 right-3 bg-white border border-black rounded-md px-2 py-1"
-        onClick={() => setShowGalleryModal(true)}
+        onClick={() => {
+          setActiveImageIndex(0);
+          setShowGalleryModal(true);
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
