@@ -2,19 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Listing } from "@/api";
-import { useEffect, useState } from "react";
+import { Listing, getBlurDataURL } from "@/utils";
+import { useState } from "react";
 
 type Props = { item: Listing };
 
 export function ListingItem({ item }: Props) {
   const [showAnimation, setShowAnimation] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setShowAnimation(false);
-    }, 750);
-  }, []);
 
   return (
     <Link href={`/listing/${item.info.id}`} target="_blank">
@@ -35,6 +29,14 @@ export function ListingItem({ item }: Props) {
             width={300}
             height={300}
             className="rounded-lg aspect-square"
+            placeholder="blur"
+            blurDataURL={getBlurDataURL(
+              item.info.mainImage.width,
+              item.info.mainImage.height
+            )}
+            onLoad={() => {
+              setShowAnimation(false);
+            }}
           />
         </div>
         <div className="flex justify-between items-center mt-2">

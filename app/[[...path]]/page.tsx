@@ -1,6 +1,6 @@
 "use client";
 
-import { Listing, getCities, getListings } from "@/api";
+import { Listing, getCities, getListings } from "@/utils";
 import { CategoryList, ListingItem, ListingsContainer } from "@/components";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

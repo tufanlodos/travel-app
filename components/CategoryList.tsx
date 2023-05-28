@@ -1,6 +1,6 @@
 "use client";
 
-import { Category, getCategories } from "@/api";
+import { Category, getCategories } from "@/utils";
 import { useEffect, useState } from "react";
 
 type Props = {

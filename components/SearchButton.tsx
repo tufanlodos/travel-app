@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Modal } from "./Modal";
 import { ButtonOutline } from "./ButtonOutline";
-import { getCities } from "@/api";
+import { getCities } from "@/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export function SearchButton() {

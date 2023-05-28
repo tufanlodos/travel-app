@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Image as ImageType, getListing } from "@/api";
+import { Image as ImageType, getBlurDataURL, getListing } from "@/utils";
 import { ButtonOutline, Modal } from "@/components";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -122,9 +122,10 @@ export default function ListingPage({ params }: Props) {
           height={item.info.mainImage.height}
           className="aspect-square rounded-md w-full h-full"
           placeholder="blur"
-          blurDataURL={`data:image/svg+xml;base64,${toBase64(
-            getBlurSVG(item.info.mainImage.width, item.info.mainImage.height)
-          )}`}
+          blurDataURL={getBlurDataURL(
+            item.info.mainImage.width,
+            item.info.mainImage.height
+          )}
         />
         <GalleryButton images={item.info.images.data} />
       </div>
@@ -141,9 +142,7 @@ export default function ListingPage({ params }: Props) {
               height={image.height}
               className="aspect-square rounded-md w-full h-full"
               placeholder="blur"
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                getBlurSVG(image.width, image.height)
-              )}`}
+              blurDataURL={getBlurDataURL(image.width, image.height)}
             />
           </div>
         ))}
@@ -188,7 +187,11 @@ export default function ListingPage({ params }: Props) {
                     width={50}
                     height={50}
                     className="rounded-full"
-                    loading="eager"
+                    placeholder="blur"
+                    blurDataURL={getBlurDataURL(
+                      item.info.host.avatar.width,
+                      item.info.host.avatar.height
+                    )}
                   />
                 )}
               </div>
@@ -435,11 +438,8 @@ const GalleryButton = ({ images }: GalleryButtonProps) => {
               className={`rounded-sm h-full w-full aspect-square object-contain ${
                 loading ? "animate-pulse" : ""
               }`}
-              loading="eager"
               placeholder="blur"
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                getBlurSVG(300, 300)
-              )}`}
+              blurDataURL={getBlurDataURL(300, 300)}
               onLoad={() => {
                 setLoading(false);
               }}
@@ -478,15 +478,3 @@ const GalleryButton = ({ images }: GalleryButtonProps) => {
     </>
   );
 };
-
-const getBlurSVG = (w: number, h: number) => `
-<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <rect width="${w}" height="${h}" fill="#f1f5f9" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-</svg>`;
-
-const toBase64 = (str: string) =>
-  typeof window === "undefined"
-    ? Buffer.from(str).toString("base64")
-    : window.btoa(str);
