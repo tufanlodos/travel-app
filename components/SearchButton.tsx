@@ -43,8 +43,8 @@ export function SearchButton() {
 
     const path = `/search?${new URLSearchParams(query).toString()}`;
     router.push(path);
-    setShowSearchModal(false);
     router.refresh();
+    setShowSearchModal(false);
   };
 
   const onClear = () => {

@@ -1,4 +1,7 @@
+"use client";
+
 import { Category, getCategories } from "@/api";
+import { useEffect, useState } from "react";
 
 type Props = {
   selectedId: Category["id"];
@@ -29,11 +32,19 @@ type ListItemProps = {
 };
 
 function ListItem({ category, selectedId, onClick }: ListItemProps) {
+  const [showAnimation, setShowAnimation] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAnimation(false);
+    }, 750);
+  }, []);
+
   return (
     <div
-      className={`flex flex-shrink-0 p-6 items-center justify-center mr-5 border cursor-pointer rounded-md w-[90px] h-[90px] text-center hover:border-black hover:shadow-sm ${
-        selectedId === category.id ? "border-black" : ""
-      }`}
+      className={`flex flex-shrink-0 p-4 items-center justify-center mr-5 border-b cursor-pointer h-[50px] text-center hover:border-b-black hover:shadow-sm ${
+        selectedId === category.id ? "border-b-black" : ""
+      } ${showAnimation ? "animate-pulse" : ""}`}
       onClick={() => onClick(category.id)}
     >
       {category.title}

@@ -11,6 +11,8 @@ type Props = {
 
 export default function IndexPage({ params }: Props) {
   const searchParams = useSearchParams();
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
   const cityParam = searchParams.get("city");
   const guestCountParam = searchParams.get("guestCount");
   const { city, guestCount } = validateParams(cityParam, guestCountParam);
@@ -19,7 +21,6 @@ export default function IndexPage({ params }: Props) {
     applySearch && city !== undefined ? city : undefined,
     applySearch && guestCount !== undefined ? Number(guestCount) : undefined
   );
-  const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const list = listings.filter((listing) =>
     selectedCategoryId === "" ? true : listing.category === selectedCategoryId
   );

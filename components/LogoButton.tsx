@@ -1,7 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export function LogoButton() {
+type Props = {
+  responsive?: boolean;
+};
+
+export function LogoButton({ responsive = true }: Props) {
+  if (!responsive) {
+    return (
+      <Link className="cursor-pointer" href="/">
+        <Image
+          src="/logo-green.png"
+          alt="Logo"
+          width={180}
+          height={40}
+          priority
+        />
+      </Link>
+    );
+  }
+
   return (
     <Link className="hidden md:block cursor-pointer" href="/">
       <Image
