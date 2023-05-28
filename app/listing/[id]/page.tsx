@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { getListing } from "@/api";
+import { Image as ImageType, getListing } from "@/api";
 import { ButtonOutline, Modal } from "@/components";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -114,16 +114,21 @@ export default function ListingPage({ params }: Props) {
           </text>
         </div>
       </div>
-      <div className="md:hidden mb-6">
+      <div className="md:hidden mb-6 relative">
         <Image
           src={item.info.mainImage.url}
           alt={item.info.title}
           width={item.info.mainImage.width}
           height={item.info.mainImage.height}
           className="aspect-square rounded-md w-full h-full"
+          placeholder="blur"
+          blurDataURL={`data:image/svg+xml;base64,${toBase64(
+            getBlurSVG(item.info.mainImage.width, item.info.mainImage.height)
+          )}`}
         />
+        <GalleryButton images={item.info.images.data} />
       </div>
-      <div className="hidden md:grid grid-rows-2 grid-cols-4 gap-4 mb-6 rounded-md">
+      <div className="hidden md:grid grid-rows-2 grid-cols-4 gap-4 mb-6 rounded-md relative">
         {item.info.images.data.slice(0, 5).map((image, index) => (
           <div
             key={image.url}
@@ -135,9 +140,14 @@ export default function ListingPage({ params }: Props) {
               width={image.width}
               height={image.height}
               className="aspect-square rounded-md w-full h-full"
+              placeholder="blur"
+              blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                getBlurSVG(image.width, image.height)
+              )}`}
             />
           </div>
         ))}
+        <GalleryButton images={item.info.images.data} />
       </div>
       <div className="flex flex-1 justify-start items-start">
         <div className="flex flex-5">
@@ -329,7 +339,7 @@ export default function ListingPage({ params }: Props) {
                 </div>
               </div>
               <div className="col-span-2 p-4 border rounded-md">
-                <text>4 Guests</text>
+                <text>Max. {item.info.maxGuestCapacity} Guests</text>
               </div>
             </div>
             <button className="bg-primary rounded-md py-3 px-7 text-white font-bold hover:bg-primary-light">
@@ -359,3 +369,124 @@ export default function ListingPage({ params }: Props) {
     </>
   );
 }
+
+type GalleryButtonProps = {
+  images: ImageType[];
+};
+
+const GalleryButton = ({ images }: GalleryButtonProps) => {
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const src = images[activeImageIndex].url;
+
+  return (
+    <>
+      <button
+        className="flex items-center absolute bottom-3 right-3 bg-white border border-black rounded-md px-2 py-1"
+        onClick={() => setShowGalleryModal(true)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          className="w-4 h-4 stroke-black mr-1"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+          />
+        </svg>
+
+        <text>Show all photos</text>
+      </button>
+      {showGalleryModal && (
+        <Modal>
+          {/*header*/}
+          <div className="flex justify-end items-center p-5 border-b border-slate-200 rounded-t">
+            <button
+              className="p-1 ml-auto bg-transparent border-0 text-black text-3xl leading-none font-semibold outline-none focus:outline-none"
+              onClick={() => setShowGalleryModal(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                className="w-6 h-6 stroke-black"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          {/*body*/}
+          <div className="p-5 min-w-[300px]">
+            <Image
+              src={src}
+              alt={`${activeImageIndex + 1}. image`}
+              width={300}
+              height={300}
+              className={`rounded-sm h-full w-full aspect-square object-contain ${
+                loading ? "animate-pulse" : ""
+              }`}
+              loading="eager"
+              placeholder="blur"
+              blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                getBlurSVG(300, 300)
+              )}`}
+              onLoad={() => {
+                setLoading(false);
+              }}
+            />
+          </div>
+          {/*footer*/}
+          <div className="flex justify-between items-center p-5">
+            <button
+              className="border px-4 py-2 rounded-md"
+              onClick={() => {
+                if (activeImageIndex > 0) {
+                  setLoading(true);
+                  setActiveImageIndex(activeImageIndex - 1);
+                }
+              }}
+            >
+              Prev
+            </button>
+            <text>
+              {activeImageIndex + 1} / {images.length}
+            </text>
+            <button
+              className="border px-4 py-2 rounded-md"
+              onClick={() => {
+                if (activeImageIndex < images.length - 1) {
+                  setLoading(true);
+                  setActiveImageIndex(activeImageIndex + 1);
+                }
+              }}
+            >
+              Next
+            </button>
+          </div>
+        </Modal>
+      )}
+    </>
+  );
+};
+
+const getBlurSVG = (w: number, h: number) => `
+<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect width="${w}" height="${h}" fill="#f1f5f9" />
+  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
+  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+</svg>`;
+
+const toBase64 = (str: string) =>
+  typeof window === "undefined"
+    ? Buffer.from(str).toString("base64")
+    : window.btoa(str);
