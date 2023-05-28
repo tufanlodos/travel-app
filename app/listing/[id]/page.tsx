@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Image as ImageType, getBlurDataURL, getListing } from "@/utils";
 import { ButtonOutline, Modal } from "@/components";
 import { useState } from "react";
@@ -19,9 +20,15 @@ export default function ListingPage({ params }: Props) {
   const [showGalleryModal, setShowGalleryModal] = useState(false);
 
   if (!item) {
-    router.push("/404");
-    router.refresh();
-    return;
+    return (
+      <div className="flex flex-col justify-center items-center mt-10">
+        <h2 className="mt-5 font-bold">Not Found</h2>
+        <p>Could not find requested place</p>
+        <Link href="/" className="mt-5 underline">
+          Return to Home
+        </Link>
+      </div>
+    );
   }
 
   const amenityGroups = item.info.amenities.data.reduce(

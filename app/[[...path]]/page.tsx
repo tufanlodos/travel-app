@@ -1,9 +1,9 @@
 "use client";
 
-import { Listing, getCities, getListings } from "@/utils";
+import { getCities, getListings } from "@/utils";
 import { CategoryList, ListingItem, ListingsContainer } from "@/components";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Props = {
   params: { path: string[] };
@@ -13,8 +13,8 @@ export default function IndexPage({ params }: Props) {
   const searchParams = useSearchParams();
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
-  const cityParam = searchParams.get("city");
-  const guestCountParam = searchParams.get("guestCount");
+  const cityParam = searchParams?.get("city") ?? null;
+  const guestCountParam = searchParams?.get("guestCount") ?? null;
   const { city, guestCount } = validateParams(cityParam, guestCountParam);
   const applySearch = params.path !== undefined && params.path[0] === "search";
   const list = getListings(
